@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Control de Obras — Gestión de Proyectos</title>
+    <meta name="description" content="Sistema de gestión de clientes, proyectos, materiales y proveedores para control de obras." />
+
+    <!-- PWA: Theme color para barra del navegador en Android -->
+    <meta name="theme-color" content="#053F5C" />
+
+    <!-- PWA: Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- PWA: Soporte iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Control Obras" />
+    <link rel="apple-touch-icon" href="/pwa-192x192.png" />
+
+    <!-- Google Fonts Oficiales: Outfit (UI) & JetBrains Mono (Cifras Financieras y Medidas) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Capturador Global de Errores de Carga para Celulares Android -->
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('[Android Error]:', e.message, e.filename, e.lineno);
+        var errBox = document.getElementById('android-error-overlay');
+        if (errBox) {
+          errBox.style.display = 'flex';
+          var msg = document.getElementById('android-error-msg');
+          if (msg) msg.innerText = (e.message || 'Error de carga de script en celular');
+        }
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('[Android Unhandled Rejection]:', e.reason);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Banner de Diagnóstico y Recuperación para Celulares Android -->
+    <div id="android-error-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:999999; background:#051923; color:#fff; flex-direction:column; align-items:center; justify-content:center; padding:24px; text-align:center; font-family:sans-serif;">
+      <div style="font-size:3rem; margin-bottom:12px;">🏗️</div>
+      <h3 style="color:#fbbf24; margin:0 0 8px 0;">Control de Obras — Actualización Requerida</h3>
+      <p id="android-error-msg" style="color:#94a3b8; font-size:0.85rem; max-width:320px; margin-bottom:20px;"></p>
+      <button onclick="limpiarCacheMovil()" style="background:#00A86B; color:#fff; border:none; padding:12px 24px; border-radius:8px; font-weight:bold; font-size:1rem; cursor:pointer; box-shadow:0 4px 12px rgba(0,168,107,0.4);">
+        🔄 Limpiar Memoria y Recargar
+      </button>
+    </div>
+
+    <script>
+      function limpiarCacheMovil() {
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.forEach(function(name) { caches.delete(name); });
+          });
+        }
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            regs.forEach(function(reg) { reg.unregister(); });
+          });
+        }
+        window.location.reload(true);
+      }
+    </script>
+
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- PWA: Registro y Auto-Actualización de Service Worker en Celulares -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => {
+              console.log('[PWA] Service Worker activo:', reg.scope);
+              reg.onupdatefound = () => {
+                const installingWorker = reg.installing;
+                if (installingWorker) {
+                  installingWorker.onstatechange = () => {
+                    if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      console.log('[PWA] Nueva versión detectada, recargando...');
+                      window.location.reload();
+                    }
+                  };
+                }
+              };
+            })
+            .catch(err => console.error('[PWA] Error en registro del SW:', err));
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+# Dependencias
+node_modules/
+dist/
+build/
+.firebase/
+
+# Variables de entorno — NUNCA versionar
+.env
+.env.*
+!.env.example
+.env.local
+.env.production
+.env.development
+credentials.json
+token.json
+google-services.json
+
+# Firebase credenciales locales
+.firebaserc
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Cache de Vite
+.vite/
