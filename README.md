@@ -19,7 +19,8 @@
 
 Este proyecto fue desarrollado y madurado bajo el **Ecosistema AnAnApps** a lo largo de **92 órdenes de desarrollo e iteraciones funcionales**. 
 
-Para potenciar la comunidad técnica y del sector de la construcción, el proyecto ha sido **congelado y liberado como código abierto (Open Source)** bajo Licencia MIT, listo para que cualquier desarrollador o empresa lo bifurque, lo continúe o lo adapte a sus propias necesidades comerciales.
+> 💡 **Proyecto en Pausa & Invitación a Contribuir / Continuar:**  
+> Actualmente este proyecto se encuentra en **pausa estratégica** en AnAnApps. Ha sido **congelado y liberado como código abierto (Open Source)** bajo **Licencia MIT**, con el objetivo de que cualquier desarrollador, equipo o empresa del sector de la construcción lo tome, lo bifurque (Fork), lo continúe evolucionando o contribuya mejoras mediante Pull Requests. ¡Tu contribución y liderazgo en este proyecto son bienvenidos!
 
 ---
 
@@ -73,7 +74,7 @@ Para potenciar la comunidad técnica y del sector de la construcción, el proyec
 
 ### Paso 1: Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/control-de-obras.git
+git clone https://github.com/ananapps799617/control-de-obras.git
 cd control-de-obras
 ```
 
